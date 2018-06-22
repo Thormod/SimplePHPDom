@@ -74,9 +74,9 @@
                             // URL base
                             $baseUrl = 'https://www.tiendasjumbo.co/buscapagina?sl=49a31962-b0e8-431b-a189-2473c95aeeeb&PS=18&cc=18&sm=0&PageNumber=';
                             // Atributos adicionales de la URL
-                            $orderByAttribute = '&&fq=C%3a%2f2000001%2f&O=OrderByBestDiscountDESC';
+                           // $orderByAttribute = '&&fq=C%3a%2f2000001%2f&O=OrderByBestDiscountDESC';
                             // Función para realizar el llamado a la URL para poder realizar llamados al DOM
-                            $html = file_get_html($baseUrl.$page.$orderByAttribute);
+                            $html = file_get_html($baseUrl.$page);
                             // Nos indica si carga una página, si no carga (o es vacía) esta retornará FALSE 
                             while($html){
                                 // LLamado a los productos por medio de su clase específica dentro del DOM
@@ -84,6 +84,7 @@
                                 // Para cada producto buscamos la información necesaria y la agregamos a la tabla si este posee descuento
                                 foreach ($products as $prod) {
                                     if($prod->find('div[class=discount-percent]', 0)->plaintext != 0) {
+                                        echo $prod;
                                         $productInfo = $prod->find('div[class="product-item__info"]', 0);
                                         $productPrices = $prod->find('div[class="product-prices__wrapper"]', 0);
                                         echo '<tr>';
@@ -104,7 +105,7 @@
                                 }
                                 // Cambio de página
                                 $page++;
-                                $html = file_get_html($baseUrl.$page.$orderByAttribute);
+                                $html = file_get_html($baseUrl.$page);
                             }
                         ?>
                         </tbody>
