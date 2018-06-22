@@ -84,7 +84,6 @@
                                 // Para cada producto buscamos la información necesaria y la agregamos a la tabla si este posee descuento
                                 foreach ($products as $prod) {
                                     if($prod->find('div[class=discount-percent]', 0)->plaintext != 0) {
-                                        echo $prod;
                                         $productInfo = $prod->find('div[class="product-item__info"]', 0);
                                         $productPrices = $prod->find('div[class="product-prices__wrapper"]', 0);
                                         echo '<tr>';
