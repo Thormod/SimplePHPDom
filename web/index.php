@@ -97,7 +97,7 @@
                                         echo $betterPrice = $productPrices->find('span[class="product-prices__value--best-price"]', 0);
                                         echo '</td>';
                                         echo '<td>';
-                                        echo $betterPrice = $productInfo->find('p[class="brand"]', 0);
+                                        echo $brand = $productInfo->find('p[class="brand"]', 0);
                                         echo '</td>';
                                         echo '</tr>';
                                     }
