@@ -96,7 +96,6 @@
                                 $products = $html->find('div[class="product-item"]');
                                 foreach ($products as $prod) {
                                     if($prod->find('div[class=discount-percent]', 0)->plaintext != 0) {
-                                        $salesCont++;
                                         $productInfo = $prod->find('div[class="product-item__info"]', 0);
                                         $productPrices = $prod->find('div[class="product-prices__wrapper"]', 0);
                                         echo '<tr>';
@@ -119,10 +118,6 @@
                                 $page++;
                                 $html = file_get_html($baseUrl.$page.$orderByAttribute);
                             }
-                            echo $page;
-                            echo '<script type="text/javascript">
-                                onLoadEvent('.$salesCont.' descuentos encontrados'.');
-                            </script>'; 
                         ?>
                         </tbody>
                      </table>
