@@ -38,24 +38,7 @@
                     <a href="#">Jumo Supermercados</a>
                 </li>
             </ol>
-
-            <div class="col-xl-3 col-sm-6 mb-3">
-                <div class="card text-white bg-success o-hidden h-100">
-                    <div class="card-body">
-                    <div class="card-body-icon">
-                        <i class="fa fa-fw fa-shopping-cart"></i>
-                        </div>
-                        <div class="mr-5" id="productsQuantityLabel">Cargando...</div>
-                    </div>
-                    <a class="card-footer text-white clearfix small z-1" href="#">
-                        <span class="float-left" id="downloadLabel"></span>
-                        <span class="float-right">
-                        <i class="fa fa-angle-right"></i>
-                        </span>
-                    </a>
-                </div>
-            </div>
-            
+  
             <div class="card mb-3">
                <div class="card-header">
                   <i class="fa fa-table"></i> Resultados
@@ -82,18 +65,23 @@
                         <tbody>
                         
                         <?php
-                            function elementExists($html, $element){
-                                return ($html->find($element, 0))? true : false;
-                            }
+                            // Al ser una página de carga dinámica por medio del scroll, es necesario aumentar el tiempo de ejecución de las funciones
                             ini_set('max_execution_time', 300);
+                            // Llamado a la librería usada para realizar el web-scraping
                             require 'simple_html_dom.php';
+                            // Variable que determina la página en la cuál se encuentra la URL
                             $page = 1;
+                            // URL base
                             $baseUrl = 'https://www.tiendasjumbo.co/buscapagina?sl=49a31962-b0e8-431b-a189-2473c95aeeeb&PS=18&cc=18&sm=0&PageNumber=';
+                            // Atributos adicionales de la URL
                             $orderByAttribute = '&&fq=C%3a%2f2000001%2f&O=OrderByBestDiscountDESC';
+                            // Función para realizar el llamado a la URL para poder realizar llamados al DOM
                             $html = file_get_html($baseUrl.$page.$orderByAttribute);
-                            $salesCont = 0;     
+                            // Nos indica si carga una página, si no carga (o es vacía) esta retornará FALSE 
                             while($html){
+                                // LLamado a los productos por medio de su clase específica dentro del DOM
                                 $products = $html->find('div[class="product-item"]');
+                                // Para cada producto buscamos la información necesaria y la agregamos a la tabla si este posee descuento
                                 foreach ($products as $prod) {
                                     if($prod->find('div[class=discount-percent]', 0)->plaintext != 0) {
                                         $productInfo = $prod->find('div[class="product-item__info"]', 0);
@@ -114,7 +102,7 @@
                                         echo '</tr>';
                                     }
                                 }
-
+                                // Cambio de página
                                 $page++;
                                 $html = file_get_html($baseUrl.$page.$orderByAttribute);
                             }
